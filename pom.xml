@@ -59,6 +59,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+	        <groupId>org.apache.cxf</groupId>
+	        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+	        <version>4.0.4</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.apache.cxf</groupId>
+	        <artifactId>cxf-rt-transports-http</artifactId>
+	        <version>4.0.4</version>
+	    </dependency>
 	</dependencies>
 
 	<build>
@@ -87,6 +97,28 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+	            <groupId>org.apache.cxf</groupId>
+	            <artifactId>cxf-codegen-plugin</artifactId>
+	            <version>4.0.4</version>
+	            <executions>
+	                <execution>
+	                    <id>generate-sources</id>
+	                    <phase>generate-sources</phase>
+	                    <goals>
+	                        <goal>wsdl2java</goal>
+	                    </goals>
+	                    <configuration>
+	                        <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
+	                        <wsdlOptions>
+	                            <wsdlOption>
+	                                <wsdl>${basedir}/src/main/resources/PRISMA_TransferenciasService.wsdl</wsdl>
+	                            </wsdlOption>
+	                        </wsdlOptions>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
 		</plugins>
 	</build>
 
