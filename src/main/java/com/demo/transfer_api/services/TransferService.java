@@ -2,6 +2,9 @@ package com.demo.transfer_api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.demo.transfer_api.daos.ITransferDao;
+import com.demo.transfer_api.daos.TransferDaoBanelco;
 import com.demo.transfer_api.daos.TransferDaoMock;
 import com.demo.transfer_api.entities.RecipientsResponse;
 import com.demo.transfer_api.enums.DocEnum;
@@ -10,11 +13,26 @@ import com.demo.transfer_api.enums.DocEnum;
 public class TransferService implements ITransferService{
 	
 	@Autowired
-	TransferDaoMock transferDao;
+	TransferDaoMock mockDao;
+	
+	@Autowired
+	TransferDaoBanelco banelcoDao;
 
 	@Override
-	public RecipientsResponse getRecipients(String numDoc, String typeDoc) {
-		return new RecipientsResponse(transferDao.getRecipients(numDoc, this.typeDocCode(typeDoc)));
+	public RecipientsResponse getRecipients(String numDoc, String typeDoc) {// Para mock doc = 1234 typeDoc = DNI
+		
+		ITransferDao dao = banelcoDao; //Por defecto es banelco
+		
+		if (isUserMock(numDoc, typeDoc)) { //si es usuario mock lo cambio
+			dao = mockDao;
+		}
+		
+		return new RecipientsResponse(dao.getRecipients(numDoc, this.typeDocCode(typeDoc)));
+
+	}
+	
+	private boolean isUserMock(String numDoc, String typeDoc) {
+		return (numDoc.equals("1234")&&typeDoc.equals("DNI"));
 	}
 	
 	//agrego una validacion y mapeo para permitir al usuario usar nombres descriptivos y mapearlo a su codigo si exite dicho nombre
@@ -44,7 +62,5 @@ public class TransferService implements ITransferService{
          return null; // Si la entrada no es válida
      }
 	}
-
-
 
 }
