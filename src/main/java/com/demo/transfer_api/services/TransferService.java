@@ -1,5 +1,7 @@
 package com.demo.transfer_api.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,7 @@ import com.demo.transfer_api.enums.DocEnum;
 
 @Service
 public class TransferService implements ITransferService{
-	
+	private static final Logger log = LoggerFactory.getLogger(TransferService.class);
 	@Autowired
 	TransferDaoMock mockDao;
 	
@@ -24,6 +26,7 @@ public class TransferService implements ITransferService{
 		ITransferDao dao = banelcoDao; //Por defecto es banelco
 		
 		if (isUserMock(numDoc, typeDoc)) { //si es usuario mock lo cambio
+			log.info("TransferService: getRecipients: Usando servicio mock");
 			dao = mockDao;
 		}
 		

@@ -2,6 +2,8 @@ package com.demo.transfer_api.daos;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.banelco.transferencias.ws.AgendaCBUDTO;
@@ -12,7 +14,8 @@ import com.banelco.transferencias.ws.UsuarioDTO;
 
 @Repository
 public class TransferDaoBanelco implements ITransferDao{
-
+	private static final Logger log = LoggerFactory.getLogger(TransferDaoBanelco.class);
+	
 	@Override
 	public List<AgendaCBUDTO> getRecipients(String numDoc, String typeDoc) {
 		
@@ -23,6 +26,7 @@ public class TransferDaoBanelco implements ITransferDao{
         UsuarioDTO usuario = new UsuarioDTO();
         TerminalDTO terminal = new TerminalDTO();
         
+        log.info("TransferDaoBanelco: getRecipients: Seteando datos para request...");
         //Completo los datos
         usuario.setNroDocumento(numDoc);
         usuario.setTipoDocumento(typeDoc);
@@ -30,9 +34,12 @@ public class TransferDaoBanelco implements ITransferDao{
         try {
             // Llamar al servicio SOAP
         	List<AgendaCBUDTO> agenda = transferenciasPort.getAgendaCBU(usuario, terminal);
+            log.info("TransferDaoBanelco: getRecipients: Respuesta de Banelco obtenida.");
+
             return agenda;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("TransferDaoBanelco: getRecipients: No se obtuvo respuesta de Banelco: "+e);
+
             //internal server error o algo asi
         }
         return null;
