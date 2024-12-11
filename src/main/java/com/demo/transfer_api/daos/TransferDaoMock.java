@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import com.banelco.transferencias.ws.AgendaCBUDTO;
+import com.demo.transfer_api.exceptionHandlers.InternalServerErrorException;
 import com.demo.transfer_api.utils.CallHttp;
 import com.demo.transfer_api.utils.JsonData;
 import com.demo.transfer_api.utils.Mapper;
@@ -34,7 +35,7 @@ public class TransferDaoMock implements ITransferDao{
 			log.info("TransferDaoMock: getRecipients: Respuesta de mock obtenida");
 		} catch (IOException e) {
 			log.error("TransferDaoMock: getRecipients: Error en llamado a mock: " + e);
-			//500
+			throw new InternalServerErrorException("Error interno de servicio, por favor vuelva a intentar.");
 		}
 		
 		
@@ -54,9 +55,8 @@ public class TransferDaoMock implements ITransferDao{
 		
 		} catch (Exception e) { //para cualquier caso que no sea OK
 			log.error("TransferDaoMock: getRecipients: Error en mapeo de xml a json: " + e);
-			//500
+			throw new InternalServerErrorException("Error interno de servicio, por favor vuelva a intentar.");
 		}
-		return null;
         
 	}
 

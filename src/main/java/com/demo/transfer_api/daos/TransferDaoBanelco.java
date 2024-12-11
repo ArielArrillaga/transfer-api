@@ -11,6 +11,7 @@ import com.banelco.transferencias.ws.TerminalDTO;
 import com.banelco.transferencias.ws.TransferenciasV2;
 import com.banelco.transferencias.ws.TransferenciasV2Service;
 import com.banelco.transferencias.ws.UsuarioDTO;
+import com.demo.transfer_api.exceptionHandlers.InternalServerErrorException;
 
 @Repository
 public class TransferDaoBanelco implements ITransferDao{
@@ -39,10 +40,8 @@ public class TransferDaoBanelco implements ITransferDao{
             return agenda;
         } catch (Exception e) {
             log.error("TransferDaoBanelco: getRecipients: No se obtuvo respuesta de Banelco: "+e);
-
-            //internal server error o algo asi
+            throw new InternalServerErrorException("No se obtuvo respuesta del proveedor.");
         }
-        return null;
 	}
 
 }

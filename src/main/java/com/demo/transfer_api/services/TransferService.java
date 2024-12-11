@@ -10,6 +10,8 @@ import com.demo.transfer_api.daos.TransferDaoBanelco;
 import com.demo.transfer_api.daos.TransferDaoMock;
 import com.demo.transfer_api.entities.RecipientsResponse;
 import com.demo.transfer_api.enums.DocEnum;
+import com.demo.transfer_api.exceptionHandlers.BadRequestException;
+import com.demo.transfer_api.exceptionHandlers.InternalServerErrorException;
 
 @Service
 public class TransferService implements ITransferService{
@@ -56,13 +58,12 @@ public class TransferService implements ITransferService{
 	             case PAS:
 	                 return DocEnum.PAS.getCodigo();
 	             default:
-	            	 //404
-	            	 //devuelvo exception
-                 return null; // Caso por defecto (opcional)
+	            	 log.error("TransferService: typeDocCode: Tipo de documento inválido.");
+	            	 throw new BadRequestException("Tipo de documento inválido");
          }
      } catch (IllegalArgumentException e) {
-    	 //devuelvo 404
-         return null; // Si la entrada no es válida
+    	 log.error("TransferService: typeDocCode: Algo salió mal al mapear el tipo de documento: "+e);
+    	 throw new InternalServerErrorException("Error interno de servicio, por favor vuelva a intentar.");
      }
 	}
 

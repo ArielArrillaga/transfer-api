@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class Response {
 
+	//En el yaml se ve que la interfaz para la respuesta es diferente, pero dado que solo se busca el caso 200 decidi simplificarla
+	
 	private String menssage;
 	private int code;
 	private UUID id;
