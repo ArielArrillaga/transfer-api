@@ -27,7 +27,11 @@
    Durante el proceso de construcción, Maven generará clases a partir del archivo WSDL incluido en el proyecto.
 
 3. Iniciar el mock con Mockoon:
+<<<<<<< Updated upstream
    - Abrir Mockoon y cargar el archivo `mock.json` incluido en el proyecto.
+=======
+   - Abrir Mockoon y cargar el archivo `Transfers-Mock-get-recipients.json` incluido en el proyecto.
+>>>>>>> Stashed changes
    - Seleccionar la opción que contiene una respuesta `200 OK` con todos los datos.
    - Hacer clic en "Run" para levantar la API mock en el puerto 3003. La URL del mock será:
     
