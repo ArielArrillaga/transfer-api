@@ -21,7 +21,7 @@ import com.demo.transfer_api.utils.Mapper;
 public class TransferDaoMock implements ITransferDao{
 	private static final Logger log = LoggerFactory.getLogger(TransferDaoMock.class);
 			
-	@Value("mockSoapUrl")
+	@Value("${mockSoapUrl}")
 	String urlMock;
 
 	@Override
@@ -35,7 +35,7 @@ public class TransferDaoMock implements ITransferDao{
 			log.info("TransferDaoMock: getRecipients: Respuesta de mock obtenida");
 		} catch (IOException e) {
 			log.error("TransferDaoMock: getRecipients: Error en llamado a mock: " + e);
-			throw new InternalServerErrorException("Error interno de servicio, por favor vuelva a intentar.");
+			throw new InternalServerErrorException("No se obtuvo respuesta del proveedor.");
 		}
 		
 		

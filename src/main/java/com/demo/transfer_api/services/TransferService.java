@@ -58,13 +58,12 @@ public class TransferService implements ITransferService{
 	             case PAS:
 	                 return DocEnum.PAS.getCodigo();
 	             default:
-	            	 log.error("TransferService: typeDocCode: Tipo de documento inválido.");
-	            	 throw new BadRequestException("Tipo de documento inválido");
-         }
-     } catch (IllegalArgumentException e) {
-    	 log.error("TransferService: typeDocCode: Algo salió mal al mapear el tipo de documento: "+e);
-    	 throw new InternalServerErrorException("Error interno de servicio, por favor vuelva a intentar.");
-     }
+	            	 return DocEnum.DNI.getCodigo();
+	        }
+	     } catch (IllegalArgumentException e) {
+	    	 log.error("TransferService: typeDocCode: Tipo de documento inválido.");
+	    	 throw new BadRequestException("Tipo de documento inválido.");
+	     }
 	}
 
 }
